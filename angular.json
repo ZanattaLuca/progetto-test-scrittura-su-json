@@ -12,6 +12,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "customWebpackConfig": {
+            "path": "./webpack.config.js"
+          },
           "options": {
             "outputPath": "dist/progetto-test-scrittura-su-json",
             "index": "src/index.html",
