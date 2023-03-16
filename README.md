@@ -1,27 +1,22 @@
 # ProgettoTestScritturaSuJson
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.2.
+I write this file to help myself write to the file system with a web app
 
-## Development server
+# npm path-browserify and fs-extra
+They are two NPM packages that provide functionality for working with file paths and file system, respectively. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+path-browserify: This package is a browser-compatible version of Node.js's core path module. Because Angular runs in the browser, it doesn't have direct access to Node core modules.js as paths.
 
-## Code scaffolding
+fs-extra: fs-extra is an extension of Node's fs core module.js which adds additional methods and improves some of the existing features. Since Angular runs in the browser, it does not have direct access to the fs module.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# webpack.config.js
+ Webpack is used by the Angular CLI to create the application bundle, including JavaScript, CSS, and other assets. Webpack configuration defines how various application modules and dependencies are handled during the bundle creation process.
 
-## Build
+ Defines an alias for the fs module pointing to fs-extra. This allows you to import fs-extra using simply import * as fs from 'fs'; in code.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Configure fallbacks for Node core modules.js which are not available in the browser context, such as path and process. The fallback for the path module is set to path-browserify, a browser-compatible version of the Node.js path module. The fallback for the process module is set to process/browser, a polyfill for the Node.js process object.
 
-## Running unit tests
+Set the Webpack target to 'electron-renderer' to indicate that compiled code will run in Electron's rendering process, which combines both browser and Node.js APIs.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# typings.d.ts
+The typings.d.ts file is a TypeScript declaration file that is used to provide information about the types of external modules or libraries that may not have default or updated TypeScript types.
