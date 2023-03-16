@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-declare const require: any;
-const { ipcRenderer } = window.require('electron');
+
+interface MyWindow extends Window {
+  require: (module: string) => any;
+}
+
+const myWindow = window as MyWindow;
+
+const { ipcRenderer } = myWindow.require('electron');
 
 @Component({
   selector: 'app-root',
@@ -8,12 +14,20 @@ const { ipcRenderer } = window.require('electron');
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'progetto-test-scrittura-su-json';
   inputValue = '';
 
+  constructor() {
+    // Leggi il contenuto del file data.json quando l'app viene avviata
+    ipcRenderer.send('read-file');
+    ipcRenderer.on('file-data', (_: any, data: any) => {
+      if (data) {
+        this.inputValue = data;
+      }
+    });
+  }
+
   saveInput() {
-    const filePath = 'src/assets/data.json';
-    ipcRenderer.send('save-data', filePath, { content: this.inputValue });
-    this.inputValue = '';
+    // Sovrascrivi il contenuto del file data.json con il nuovo valore dell'input
+    ipcRenderer.send('write-to-file', this.inputValue);
   }
 }
